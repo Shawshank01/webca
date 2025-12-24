@@ -119,10 +119,13 @@ function startGame() {
   gameInterval = setInterval(updateGame, 20);
 
   // Listen for mouse movements
-  canvas.addEventListener("mousemove", moveCar);
+  canvas.onmousemove = moveCar;
 
   // Disable the start button
-  document.querySelector("button").disabled = true;
+  const startButton = document.getElementById("startGameButton");
+  if (startButton) {
+    startButton.disabled = true;
+  }
 }
 
 
@@ -180,7 +183,10 @@ function endGame() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.font = "30px Arial";
   ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2 - 15);
-  document.querySelector("button").disabled = false;
+  const startButton = document.getElementById("startGameButton");
+  if (startButton) {
+    startButton.disabled = false;
+  }
 }
 
 function changeCar() {
@@ -200,12 +206,13 @@ window.addEventListener("resize", function () {
 add confirm box on every images in cars pages
 Author: Mingde Zhou
 */
+const buyCarUrl = window.location.pathname.includes('/Pages/') ? 'Buy-car.html' : './Pages/Buy-car.html';
 var clickableImages = document.getElementsByClassName('buyMeIMG');
 for (var i = 0; i < clickableImages.length; i++) {
     clickableImages[i].addEventListener('click', function() {
         var isConfirmed = confirm('Do you want to buy this car?');
         if (isConfirmed) {
-          window.location.href = 'Buy-car.html';
+          window.location.href = buyCarUrl;
       }
     });
 }
@@ -219,7 +226,7 @@ document.querySelectorAll('.buyMe').forEach(button => {
   button.addEventListener('click', function () {
     let r = confirm("Are you sure to buy this car?");
     if (r == true) {
-      window.location.href ="Buy-car.html";
+      window.location.href = buyCarUrl;
     }
   });
 });
